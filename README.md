@@ -19,3 +19,4 @@ Injecting an issh server with ADB permissions allows non-privileged users to exe
 
 # Uninstall
 1. `rm -rf /sdcard/.issh`
+2. Reboot
