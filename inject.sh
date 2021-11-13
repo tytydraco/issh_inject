@@ -13,4 +13,4 @@ curl -sLo "$ISSH_PATH" "$ISSH_RAW_URL"
 pkill toybox
 
 # Fork issh daemon for localhost connections only
-sh "$ISSH_PATH" -dl &
+nice -n -20 -- sh "$ISSH_PATH" -dl &
