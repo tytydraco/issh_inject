@@ -18,7 +18,16 @@ prepare_env() {
 # Push latest issh script to the device
 fetch_issh() {
     dbg "Fetching the lastet issh script..."
-    curl -#Lo "$ISSH_CACHE_PATH" "$ISSH_RAW_URL"
+    if ! curl -#Lo "$ISSH_CACHE_PATH" "$ISSH_RAW_URL"
+    then
+        dbg "Unable to fetch script. Using cached..."
+    fi
+
+    if [[ ! -f "$ISSH_CACHE_PATH" ]]
+    then
+        dbg "Cached script unavailabe. Bail!"
+        exit 1
+    fi
 
     dbg "Pushing issh to the device..."
     adb push "$ISSH_CACHE_PATH" "$ISSH_PATH"
