@@ -3,6 +3,7 @@
 ISSH_DIR="/sdcard/.issh"
 ISSH_PATH="$ISSH_DIR/issh"
 ISSH_RAW_URL="https://raw.githubusercontent.com/tytydraco/issh/main/issh"
+ISSH_CACHE_PATH=".issh.sh"
 
 dbg() {
     echo -e "\e[36m * $*\e[0m"
@@ -16,17 +17,11 @@ prepare_env() {
 
 # Push latest issh script to the device
 fetch_issh() {
-    local tmp
-    tmp="$(mktemp)"
-
     dbg "Fetching the lastet issh script..."
-    curl -#Lo "$tmp" "$ISSH_RAW_URL"
+    curl -#Lo "$ISSH_CACHE_PATH" "$ISSH_RAW_URL"
 
     dbg "Pushing issh to the device..."
-    adb push "$tmp" "$ISSH_PATH"
-
-    dbg "Cleaning up..."
-    rm -f "$tmp"
+    adb push "$ISSH_CACHE_PATH" "$ISSH_PATH"
 }
 
 # Fork issh daemon
