@@ -7,12 +7,14 @@ Injecting an issh server with ADB permissions allows non-privileged users to exe
 # Process
 1. The lastest issh script is pulled from the [official repository](https://github.com/tytydraco/issh)
 2. Any running issh servers are killed
-3. Start the issh daemon with adb priviledges (localhost connections only)
+3. Start the issh daemon with adb privileges (localhost connections only)
 
 # Inject
-1. Place this script somewhere on your Android device. For this installation, we can assume the location to be `/sdcard/inject.sh`.
-2. Run the script using ADB: `adb shell sh /sdcard/inject.sh`
+1. Connect an Android device and verify that ADB permissions are granted
+2. Run the script: `bash inject.sh`  
+  2a. Alternatively, use the python program: `python inject.py`
 3. After injection, the script can be deleted. However, you may want to keep it to make future injections easier.
+4. NOTE: You may hang on the bootstrapping step. This is normal, you may unplug the device after a second or two.
 
 # Verify
 1. `adb shell "netstat -an | grep 65432"`. If there is no output, then the issh server is not running. The desired output should show an open TCP connection to localhost (127.0.0.1) open on port 65432.
