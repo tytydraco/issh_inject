@@ -22,3 +22,27 @@ Injecting an issh server with ADB permissions allows non-privileged users to exe
 # Uninstall
 1. `rm -rf /sdcard/.issh`
 2. Reboot
+
+# Raspberry Pi auto-inject
+You can have a Raspberry Pi execute the issh daemon when an Android device is connected. This is the ideal solution for on-the-go emergency issh injections. The setup is very simple.
+
+1. Install [Raspberry Pi OS](https://www.raspberrypi.com/software/operating-systems/) to an unused SD card
+2. Make sure to enable headless ssh by placing an empty file called `ssh` in the boot partition
+3. Boot into the installation and SSH into the Raspberry PI
+4. Install ADB: `apt install android-tools-adb`
+5. Edit `/etc/rc.local` and add `setsid /root/kickoff &` to the empty line before `exit 0`
+6. Make a new file at `/root/kickoff` and insert the following contents:
+
+```sh
+#!/usr/bin/env bash
+
+while true
+do
+	adb wait-for-device
+	adb shell "sh /sdcard/inject.sh && input keyevent 26"
+	adb disconnect
+done
+```
+
+7. Make the script executable: `chmod +x kickoff`
+8. Done!
