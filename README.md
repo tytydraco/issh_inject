@@ -40,7 +40,6 @@ while true
 do
 	adb wait-for-device
 	adb shell "sh /sdcard/.issh/issh -dl"
-	adb shell "input keyevent 26"
 	adb disconnect
 done
 ```
@@ -48,4 +47,4 @@ done
 7. Make the script executable: `chmod +x kickoff`
 8. On your Android devices, place the issh script at `/sdcard/.issh/issh`
 
-To use it, simply power on the Pi and make sure an Android device is connected (as a slave, not a host). When the process is complete, the power button will be pressed automatically.
+To use it, simply power on the Pi and make sure an Android device is connected (as a slave, not a host).
